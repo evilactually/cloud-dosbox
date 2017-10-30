@@ -548,9 +548,11 @@ skip_shot:
 		int written = capture.video.codec->FinishCompressFrame();
 		if (written < 0)
 			goto skip_video;
+		// NOTE: Write video component
 		CAPTURE_AddAviChunk( "00dc", written, capture.video.buf, codecFlags & 1 ? 0x10 : 0x0);
 		capture.video.frames++;
-//		LOG_MSG("Frame %d video %d audio %d",capture.video.frames, written, capture.video.audioused *4 );
+		// LOG_MSG("Frame %d video %d audio %d",capture.video.frames, written, capture.video.audioused *4 );
+		// NOTE: Write the audio component
 		if ( capture.video.audioused ) {
 			CAPTURE_AddAviChunk( "01wb", capture.video.audioused * 4, capture.video.audiobuf, 0);
 			capture.video.audiowritten = capture.video.audioused*4;

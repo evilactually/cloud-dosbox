@@ -374,6 +374,7 @@ static void MIXER_MixData(Bitu needed) {
 			convert[i][1]=MIXER_CLIP(sample);
 			readpos=(readpos+1)&MIXER_BUFMASK;
 		}
+		// NOTE: Capture audio
 		CAPTURE_AddWave( mixer.freq, added, (Bit16s*)convert );
 	}
 	//Reset the the tick_add for constant speed
