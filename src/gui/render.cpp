@@ -202,6 +202,7 @@ static void RENDER_Halt( void ) {
 
 extern Bitu PIC_Ticks;
 void RENDER_EndUpdate( bool abort ) {
+	LOG_MSG("bpp: %d, pitch: %d, w: %d, h: %d", render.src.bpp, render.scale.cachePitch, render.src.width, render.src.height);
 	if (GCC_UNLIKELY(!render.updating))
 		return;
 	RENDER_DrawLine = RENDER_EmptyLineHandler;
