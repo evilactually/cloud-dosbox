@@ -42,6 +42,7 @@
 #include "mapper.h"
 #include "ints/int10.h"
 #include "render.h"
+#include "streaming/streaming.hpp" // NOTE: How can I add "streaming" into include path the way the rest of the Dosbox does it?
 
 Config * control;
 MachineType machine;
@@ -675,6 +676,9 @@ void DOSBOX_Init(void) {
 #endif
 //	secprop->AddInitFunction(&CREDITS_Init);
 
+    // Streaming
+    secprop->AddInitFunction(&STREAMING_Init);
+    //STREAMING_Init(NULL);
 	//TODO ?
 	secline=control->AddSection_line("autoexec",&AUTOEXEC_Init);
 	MSG_Add("AUTOEXEC_CONFIGFILE_HELP",
