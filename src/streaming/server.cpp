@@ -33,7 +33,7 @@ static int callback_websockets(struct lws *, enum lws_callback_reasons,void *, v
 
 static struct lws_protocols server_protocols[] = {
 	{ "http-only", callback_http, 0 },
-	{ NULL, callback_websockets, sizeof(int), 1024*1024 },
+	{ "cloud-dosbox", callback_websockets, sizeof(int), 1024*1024 },
 	{ NULL, NULL, 0 /* End of list */ }
 };
 
@@ -49,8 +49,8 @@ struct server_t *server_create(int port, size_t buffer_size) {
 	self->port = port;
 	self->clients = NULL;
 
-	lws_set_log_level(LLL_ERR | LLL_WARN, NULL);
-
+	lws_set_log_level( LLL_ERR | LLL_WARN, NULL);
+//LLL_DEBUG
 	struct lws_context_creation_info info = {0};
 	info.port = port;
 	info.gid = -1;
@@ -148,12 +148,14 @@ static int callback_websockets(
 ) {
 	struct lws_context *context = lws_get_context(wsi);
 	struct server_t *self = (struct server_t *)lws_context_user(context);
+   	//printf("%s\n", "callback_websockets");
 
 	switch( reason ) {
 		case LWS_CALLBACK_ESTABLISHED:
 			client_insert(&self->clients, wsi);
-
+			printf("%s\n", "Connected");
 			if( self->on_connect ) {
+				
 				self->on_connect(self, wsi);
 			}
 			break;
